@@ -17,7 +17,7 @@ public class Triangle {
         y2 = yMiddle;
         x3 = xEnd;
         y3 = yEnd;
-        color = new Color(c);
+        Color color = new Color(c);
         // check how u want to format color
     }
 
