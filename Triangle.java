@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.geom.*;
 
-public class Triangle {
+public class Triangle implements DrawingObject{
     private double x1;
     private double x2;
     private double x3;
@@ -20,6 +20,7 @@ public class Triangle {
         color = c;
         // check how u want to format color
     }
+
 
     public void draw(Graphics2D g2d) {
         AffineTransform reset = g2d.getTransform();

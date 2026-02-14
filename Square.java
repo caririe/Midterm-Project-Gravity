@@ -8,12 +8,11 @@ public class Square implements DrawingObject {
     private double size;
     private Color color;
 
-    public Square(double x, double y, double s, int c) {
+    public Square(double x, double y, double s, Color c) {
         xCoor = x;
         yCoor = y;
         size = s;
-        color = new Color(c);
-        // check how u want to format color
+        color = c;
     }
 
     public void draw(Graphics2D g2d) {

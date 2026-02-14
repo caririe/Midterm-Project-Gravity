@@ -17,18 +17,18 @@ public class Sun implements DrawingObject {
     public Sun(double x, double y, double s, Color cc, Color rc) {
         xCoor = x;
         yCoor = y;
+        size = s;
         centerX = x+size/2;
         centerY = y+size/2;
         rayColor = rc;
         coreColor = cc;
-        size = s;
         angle = Math.toRadians(360/8);
 
         core = new Circle(xCoor, yCoor, size, coreColor);
         ray = new Triangle(
-            centerX - size*0.2 ,centerY-size*0.4,
-            centerX + size*0.2 ,centerY-size*0.4,
-            centerX, centerY - size*0.8,
+            centerX - size*0.25,centerY-size*0.47,
+            centerX + size*0.25,centerY-size*0.47,
+            centerX, centerY - size*0.75,
             rayColor);
     }
 

@@ -1,3 +1,4 @@
+import java.awt.*;
 import javax.swing.*;
 
 public class SceneFrame {
@@ -13,21 +14,18 @@ public class SceneFrame {
         height = h;
         frame = new JFrame();
         sceneCanvas = new SceneCanvas(w,h);
-
     }
-
-    public SceneCanvas getCanvas(){
-        return sceneCanvas;
-    }
-        
 
     public void setUpGUI() {
+        Container contentPane = frame.getContentPane();
+        JPanel mainPanel = new JPanel();
+        mainPanel.setPreferredSize(new Dimension(800, 600));
+        contentPane.add(mainPanel);
+        mainPanel.add(sceneCanvas);
         frame.setTitle("Midterm Project - Doromal - Lee");
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        
-        // what this does is that it automatically resizes the components
         frame.setVisible(true);
     }
 
