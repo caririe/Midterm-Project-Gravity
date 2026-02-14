@@ -10,13 +10,13 @@ public class Line implements DrawingObject{
     private float thickness;
     private Color color;
 
-    public Line(double xStart, double yStart, double xEnd, double yEnd, float t, int c) {
+    public Line(double xStart, double yStart, double xEnd, double yEnd, float t, Color c) {
         xStartCoor = xStart;
         yStartCoor = yStart;
         xEndCoor = xEnd;
         yEndCoor = yEnd;
         thickness = t;
-        color = new Color(c);
+        color = c;
         // check how u want to format color
     }
 

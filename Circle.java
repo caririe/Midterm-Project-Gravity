@@ -8,11 +8,11 @@ public class Circle implements DrawingObject{
     private double size;
     private Color color;
 
-    public Circle(double x, double y, double s, int c) {
+    public Circle(double x, double y, double s, Color c) {
         xCoor = x;
         yCoor = y;
         size = s;
-        color = new Color(c);
+        color = c;
         // check how u want to format color
     }
 

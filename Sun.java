@@ -1,34 +1,61 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.ArrayList;
 
 public class Sun implements DrawingObject {
 
     private Circle core;
-    private Triangle ray1;
-    private Triangle ray2;
-    private Triangle ray3;
-    private Triangle ray4;
-    private Triangle ray5;
-    private Triangle ray6;
-    private Triangle ray7;
-    private Triangle ray8;
+    private Triangle ray;
     private double xCoor;
     private double yCoor;
+    private double centerX;
+    private double centerY;
     private double angle;
+    private Color coreColor;
+    private Color rayColor;
+    private double size;
     
-    public Sun(double x, double y, double size, int color) {
-        core = new Circle(x-size/2, y-size/2, size, color);
+    public Sun(double x, double y, double s, Color cc, Color rc) {
+        xCoor = x;
+        yCoor = y;
+        centerX = x+size/2;
+        centerY = y+size/2;
+        rayColor = rc;
+        coreColor = cc;
+        size = s;
         angle = Math.toRadians(360/8);
-        ray1 = new Triangle(x,y,x+size*0.2,y,x+size*0.1,y+size*0.2,color);
 
+        core = new Circle(xCoor, yCoor, size, coreColor);
+        ray = new Triangle(
+            centerX - size*0.2 ,centerY-size*0.4,
+            centerX + size*0.2 ,centerY-size*0.4,
+            centerX, centerY - size*0.8,
+            rayColor);
     }
-
 
     public void draw(Graphics2D g2d) {
         core.draw(g2d);
-        ray1.draw(g2d);
+
+        AffineTransform reset = g2d.getTransform();
+
+        ray.draw(g2d);
+        g2d.rotate(angle, centerX, centerY);
+        ray.draw(g2d);
+        g2d.rotate(angle, centerX, centerY);
+        ray.draw(g2d);
+        g2d.rotate(angle, centerX, centerY);
+        ray.draw(g2d);
+        g2d.rotate(angle, centerX, centerY);
+        ray.draw(g2d);
+        g2d.rotate(angle, centerX, centerY);
+        ray.draw(g2d);
+        g2d.rotate(angle, centerX, centerY);
+        ray.draw(g2d);
+        g2d.rotate(angle, centerX, centerY);
+        ray.draw(g2d);
+
+        g2d.setTransform(reset);
+        
+
     }
 
 }

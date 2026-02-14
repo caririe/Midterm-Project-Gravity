@@ -10,14 +10,14 @@ public class Triangle {
     private double y3;
     private Color color;
 
-    public Triangle(double xStart, double yStart, double xMiddle, double yMiddle, double xEnd, double yEnd, int c) {
+    public Triangle(double xStart, double yStart, double xMiddle, double yMiddle, double xEnd, double yEnd, Color c) {
         x1 = xStart;
         y1 = yStart;
         x2 = xMiddle;
         y2 = yMiddle;
         x3 = xEnd;
         y3 = yEnd;
-        Color color = new Color(c);
+        color = c;
         // check how u want to format color
     }
 
