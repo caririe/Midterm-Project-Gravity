@@ -19,6 +19,7 @@ public class SceneCanvas extends JComponent {
         listDrawingObject.add(new Sun(516, 60, 100, Color.decode("#F8D84F"),Color.decode("#F9BE38")));
         listDrawingObject.add(new Cloud(50, 108, 58, Color.decode("#FFFFFF")));
         listDrawingObject.add(new House(455, 445, 80, Color.decode("#F5F5DC"), Color.decode("#DED1B6")));
+        listDrawingObject.add(new Dumbbell(500, 300, 50, Color.decode("#7D7F7C")));
     }
 
     // test

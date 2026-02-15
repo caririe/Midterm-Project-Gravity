@@ -9,22 +9,26 @@ public class Dumbbell implements DrawingObject{
     private double size;
     private Color color;
     private Circle body;
-    private Line handle;
+    private Path2D.Double handle;
     private float thickness;
 
-    public Dumbbell(double x, double y, double s, Color c, float t) {
+    public Dumbbell(double x, double y, double s, Color c) {
         color = c;
         xCoor = x;
         yCoor = y;
         size = s;
         body = new Circle(xCoor, yCoor, size, color);
-        handle = new Line(xCoor + size*0.2, yCoor + size*0.2, xCoor + size*0.8, yCoor + size*0.2, thickness, color);
+        handle = new Path2D.Double();
+        handle.moveTo(x + size*0.2, y + size*0.2);
+        handle.curveTo(x+size*0.3, y - size*0.5, x+size*0.7, y - size*0.5, x+size*0.8, y+size*0.2);
     }
 
     @Override
     public void draw (Graphics2D g2d) {
         body.draw(g2d);
-        handle.draw(g2d);
+        g2d.setColor(color);
+        g2d.setStroke(new BasicStroke(2));
+        g2d.draw(handle);
 
     }
 
