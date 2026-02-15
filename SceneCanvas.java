@@ -19,7 +19,7 @@ public class SceneCanvas extends JComponent {
         listDrawingObject.add(new Sun(516, 60, 100, Color.decode("#F8D84F"),Color.decode("#F9BE38")));
         listDrawingObject.add(new Cloud(50, 108, 58, Color.decode("#FFFFFF")));
         listDrawingObject.add(new House(455, 445, 80, Color.decode("#F5F5DC"), Color.decode("#DED1B6")));
-        listDrawingObject.add(new Dumbbell(500, 300, 50, Color.decode("#7D7F7C")));
+        listDrawingObject.add(new Dumbbell(736, 275, 50, Color.decode("#7D7F7C")));
     }
 
     // test
@@ -71,6 +71,18 @@ public class SceneCanvas extends JComponent {
         g2d.setColor(Color.RED);
         g2d.fill(fallButton);
 
+        Rectangle2D.Double windButton = new Rectangle2D.Double(665,434,122,37);
+        g2d.setColor(Color.RED);
+        g2d.fill(windButton);
+
+        Rectangle2D.Double leavesButton = new Rectangle2D.Double(665,491,122,37);
+        g2d.setColor(Color.GRAY);
+        g2d.fill(leavesButton);
+
+        Rectangle2D.Double timeButton = new Rectangle2D.Double(665,547,122,37);
+        g2d.setColor(Color.BLUE);
+        g2d.fill(timeButton);
+
         
         // Loop to Create the Objects
         for (DrawingObject i : listDrawingObject) {
@@ -80,6 +92,5 @@ public class SceneCanvas extends JComponent {
         // Draw the objects 
         
     }
-
     
 }
