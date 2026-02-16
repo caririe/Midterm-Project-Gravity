@@ -27,6 +27,10 @@ public class Circle implements DrawingObject{
 
     }
 
+    public void changeColor(Color c) {
+        color = c;
+    }
+
 
     
 

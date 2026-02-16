@@ -26,7 +26,7 @@ public class Line implements DrawingObject{
         Line2D.Double line = new Line2D.Double(xStartCoor, yStartCoor, xEndCoor, yEndCoor);
         g2d.setColor(color);
         g2d.setStroke(new BasicStroke(thickness));
-        g2d.fill(line);
+        g2d.draw(line);
 
         g2d.setTransform(reset);
         // not sure if we with rendering hits here

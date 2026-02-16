@@ -13,6 +13,7 @@ public class SoccerBall implements DrawingObject{
     private Line line4;
     private Line line5;
     private Triangle triangle1;
+    public double velocity = 0;
 
     public SoccerBall(double x, double y) {
         // Note that X and Y are coordinates for the center of the ball
@@ -53,6 +54,19 @@ public class SoccerBall implements DrawingObject{
        }
 
         g2d.setTransform(reset);
+    }
+
+    public void fall(double n) {
+        velocity += n;
+        yCoor += velocity;
+        circle = new Circle(xCoor - 25, yCoor - 25, 50, Color.WHITE);
+        pentagon = new Pentagon(xCoor, yCoor, 2.3, Color.BLACK); // adjust/check size
+        line1 = new Line(xCoor, yCoor, xCoor, yCoor-20, 1, Color.BLACK);
+        line2 = new Line(xCoor, yCoor, xCoor+17, yCoor-5, 1, Color.BLACK);
+        line3 = new Line(xCoor, yCoor, xCoor+10, yCoor+15, 1, Color.BLACK);
+        line4 = new Line(xCoor, yCoor, xCoor-10, yCoor+15, 1, Color.BLACK);
+        line5 = new Line(xCoor, yCoor, xCoor-17, yCoor-5, 1, Color.BLACK);
+        triangle1 = new Triangle(xCoor, yCoor-15, xCoor-7, yCoor-23, xCoor+7, yCoor-23, Color.BLACK);
     }
 
 

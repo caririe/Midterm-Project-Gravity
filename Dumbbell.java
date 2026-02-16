@@ -11,6 +11,7 @@ public class Dumbbell implements DrawingObject{
     private Circle body;
     private Path2D.Double handle;
     private float thickness;
+    private double velocity = 0;
 
     public Dumbbell(double x, double y, double s, Color c) {
         color = c;
@@ -29,7 +30,15 @@ public class Dumbbell implements DrawingObject{
         g2d.setColor(color);
         g2d.setStroke(new BasicStroke(2));
         g2d.draw(handle);
-
     }
+
+    public void fall(double n){
+        velocity += n;
+        yCoor += velocity;
+        body = new Circle(xCoor, yCoor, size, color);
+        handle = new Path2D.Double();
+        handle.moveTo(xCoor + size*0.2, yCoor + size*0.2);
+        handle.curveTo(xCoor+size*0.3, yCoor - size*0.5, xCoor+size*0.7, yCoor - size*0.5, xCoor+size*0.8, yCoor+size*0.2);
+    }   
 
 }
