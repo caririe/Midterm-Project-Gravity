@@ -2,22 +2,39 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.geom.*;
+import java.nio.channels.Pipe.SourceChannel;
+import java.awt.event.*;;
 
-public class SceneCanvas extends JComponent {
+public class SceneCanvas extends JComponent implements MouseListener{
 
     private ArrayList<DrawingObject> listDrawingObject;
     private int width;
     private int height;
+    private Cloud cloud1;
+    private javax.swing.Timer cloudTimer;
+    private boolean wind = false;
+    private Rectangle2D.Double windButton = new Rectangle2D.Double(665,434,122,37);
 
     public SceneCanvas(int w, int h) {
         width = w;
         height = h;
         setPreferredSize(new Dimension(w, h));
         listDrawingObject = new ArrayList<>();
+        addMouseListener(this);
+        cloudTimer = new javax.swing.Timer(10, new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                for (DrawingObject o : listDrawingObject) {
+                    if (o instanceof Cloud) {
+                        ((Cloud) o).move(1);
+                    }
+                }
+                repaint();
+            }
+        });
 
         // add to the objects to the list of drawing objects 
-        listDrawingObject.add(new Sun(516, 60, 100, Color.decode("#F8D84F"),Color.decode("#F9BE38")));
         listDrawingObject.add(new Cloud(50, 108, 58, Color.decode("#FFFFFF")));
+        listDrawingObject.add(new Sun(516, 60, 100, Color.decode("#F8D84F"),Color.decode("#F9BE38")));
         listDrawingObject.add(new House(455, 445, 80, Color.decode("#F5F5DC"), Color.decode("#DED1B6")));
         listDrawingObject.add(new Dumbbell(736, 275, 50, Color.decode("#7D7F7C")));
     }
@@ -37,20 +54,19 @@ public class SceneCanvas extends JComponent {
         g2d.setRenderingHints(rh);
 
         //SCENE AREA
-        Rectangle2D.Double sceneArea = new Rectangle2D.Double(0, 0, 650, 600);
-        g2d.setColor(Color.decode("#bdd7ff"));
-        g2d.fill(sceneArea);
-
-        Ellipse2D.Double plains = new Ellipse2D.Double();
+        Rectangle sceneArea = new Rectangle(0, 0, 650, 600, Color.decode("#bdd7ff"));
         Circle mountain1 = new Circle(150, 380, 800, Color.decode("#63AD43"));
-        mountain1.draw(g2d);
-
         Circle mountain2 = new Circle(-200, 400, 800, Color.decode("#63AD43"));
+        Rectangle road = new Rectangle(0, 525, 650, 65, Color.decode("#a3a3a3"));
+        
+        sceneArea.draw(g2d);
+        mountain1.draw(g2d);
         mountain2.draw(g2d);
+        road.draw(g2d);
 
-        Rectangle2D.Double road = new Rectangle2D.Double(0, 525, 650, 65);
-        g2d.setColor(Color.decode("#a3a3a3"));
-        g2d.fill(road);
+        for (DrawingObject i : listDrawingObject) {
+            i.draw(g2d);
+        }
 
 
         // MENU
@@ -71,7 +87,7 @@ public class SceneCanvas extends JComponent {
         g2d.setColor(Color.RED);
         g2d.fill(fallButton);
 
-        Rectangle2D.Double windButton = new Rectangle2D.Double(665,434,122,37);
+        
         g2d.setColor(Color.RED);
         g2d.fill(windButton);
 
@@ -82,15 +98,55 @@ public class SceneCanvas extends JComponent {
         Rectangle2D.Double timeButton = new Rectangle2D.Double(665,547,122,37);
         g2d.setColor(Color.BLUE);
         g2d.fill(timeButton);
-
         
         // Loop to Create the Objects
-        for (DrawingObject i : listDrawingObject) {
-            i.draw(g2d);
-        }
 
         // Draw the objects 
         
     }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        if (windButton.contains(me.getPoint())){
+            if (!wind) {
+                cloudTimer.start();
+                wind = true;
+                System.out.println("You have turned it on.");
+            }
+            else {
+                cloudTimer.stop(); 
+                wind = false;
+                System.out.println("You have turned it off.");
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
+
+    }
     
 }
+
+// https://youtu.be/tHNWIWxRDDA?si=LfyXm-aHgHUYGrYd
+// https://youtu.be/0cATENiMsBE?si=tJrkpFH-Zqgjt7pB
+// https://youtu.be/0cATENiMsBE?si=ZtyxEfYmZCoNTVxa
+// https://youtu.be/jptf1Wd_omw?si=dln4I3_OGvlfPUgi
+// https://youtu.be/0cATENiMsBE?si=T33_OPIZlyOza4kQ
+// https://medium.com/javarevisited/filtering-a-java-collection-by-type-7c1d611d0d95
+

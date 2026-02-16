@@ -24,7 +24,7 @@ public class Cloud implements DrawingObject{
         size = s;
         el1 = new Circle(xCoor, yCoor, size, color);
         el2 = new Circle(xCoor+size*0.5, yCoor-size*0.46, size*1.18, color);
-        el3 = new Circle(xCoor+size*1.29, yCoor-s*0.65, size*1.29, color);
+        el3 = new Circle(xCoor+size*1.29, yCoor-size*0.65, size*1.29, color);
         el4 = new Circle(xCoor+size*1.93, yCoor-size*0.27, size*1.29, color);
         el5 = new Circle(xCoor+size*2.08, yCoor+size*0.06, size*1.29, color);
         el6 = new Circle(xCoor+size*1.29, yCoor+size*0.31, size*1.29, color);
@@ -33,6 +33,21 @@ public class Cloud implements DrawingObject{
 
     public double getX() {
         return xCoor;
+    }
+
+    public void move(double n){
+        xCoor += n;
+        if (xCoor > 650) {
+            xCoor = -100;
+        }
+
+        el1 = new Circle(xCoor, yCoor, size, color);
+        el2 = new Circle(xCoor+size*0.5, yCoor-size*0.46, size*1.18, color);
+        el3 = new Circle(xCoor+size*1.29, yCoor-size*0.65, size*1.29, color);
+        el4 = new Circle(xCoor+size*1.93, yCoor-size*0.27, size*1.29, color);
+        el5 = new Circle(xCoor+size*2.08, yCoor+size*0.06, size*1.29, color);
+        el6 = new Circle(xCoor+size*1.29, yCoor+size*0.31, size*1.29, color);
+        el7 = new Circle(xCoor+size*0.77, yCoor+size*0.27, size*1.29, color);
     }
 
     @Override
