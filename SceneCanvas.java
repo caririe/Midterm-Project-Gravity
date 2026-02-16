@@ -10,10 +10,12 @@ public class SceneCanvas extends JComponent implements MouseListener{
     private ArrayList<DrawingObject> listDrawingObject;
     private int width;
     private int height;
-    private Cloud cloud1;
     private javax.swing.Timer cloudTimer;
     private boolean wind = false;
+    private Rectangle sceneArea;
+    private boolean dayTime = false;
     private Rectangle2D.Double windButton = new Rectangle2D.Double(665,434,122,37);
+    private Rectangle2D.Double timeButton = new Rectangle2D.Double(665,547,122,37);
 
     public SceneCanvas(int w, int h) {
         width = w;
@@ -37,6 +39,7 @@ public class SceneCanvas extends JComponent implements MouseListener{
         listDrawingObject.add(new Sun(516, 60, 100, Color.decode("#F8D84F"),Color.decode("#F9BE38")));
         listDrawingObject.add(new House(455, 445, 80, Color.decode("#F5F5DC"), Color.decode("#DED1B6")));
         listDrawingObject.add(new Dumbbell(736, 275, 50, Color.decode("#7D7F7C")));
+        listDrawingObject.add(new SoccerBall(691, 215));
     }
 
     // test
@@ -54,7 +57,7 @@ public class SceneCanvas extends JComponent implements MouseListener{
         g2d.setRenderingHints(rh);
 
         //SCENE AREA
-        Rectangle sceneArea = new Rectangle(0, 0, 650, 600, Color.decode("#bdd7ff"));
+        sceneArea = new Rectangle(0, 0, 650, 600, Color.decode("#bdd7ff"));
         Circle mountain1 = new Circle(150, 380, 800, Color.decode("#63AD43"));
         Circle mountain2 = new Circle(-200, 400, 800, Color.decode("#63AD43"));
         Rectangle road = new Rectangle(0, 525, 650, 65, Color.decode("#a3a3a3"));
@@ -65,10 +68,10 @@ public class SceneCanvas extends JComponent implements MouseListener{
         road.draw(g2d);
 
         for (DrawingObject i : listDrawingObject) {
-            i.draw(g2d);
+            if (i instanceof Cloud) {
+                i.draw(g2d);
+            }
         }
-
-
         // MENU
         Rectangle2D.Double menuArea = new Rectangle2D.Double(650, 0, 150, 600); // check if resizable
         g2d.setColor(Color.decode("#ffffff"));
@@ -86,7 +89,6 @@ public class SceneCanvas extends JComponent implements MouseListener{
         Rectangle2D.Double fallButton = new Rectangle2D.Double(665,343,122,37);
         g2d.setColor(Color.RED);
         g2d.fill(fallButton);
-
         
         g2d.setColor(Color.RED);
         g2d.fill(windButton);
@@ -95,20 +97,22 @@ public class SceneCanvas extends JComponent implements MouseListener{
         g2d.setColor(Color.GRAY);
         g2d.fill(leavesButton);
 
-        Rectangle2D.Double timeButton = new Rectangle2D.Double(665,547,122,37);
+        
         g2d.setColor(Color.BLUE);
         g2d.fill(timeButton);
-        
-        // Loop to Create the Objects
 
-        // Draw the objects 
+        for (DrawingObject i : listDrawingObject) {
+            if (!(i instanceof Cloud)) {
+                i.draw(g2d);
+            }
+        }
         
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        if (windButton.contains(me.getPoint())){
-            if (!wind) {
+        if (windButton.contains(me.getX(), me.getY())){
+            if (wind == false) {
                 cloudTimer.start();
                 wind = true;
                 System.out.println("You have turned it on.");
@@ -118,6 +122,19 @@ public class SceneCanvas extends JComponent implements MouseListener{
                 wind = false;
                 System.out.println("You have turned it off.");
             }
+        }
+        else if (timeButton.contains(me.getX(), me.getY())) {
+            if (dayTime) {
+                sceneArea.changeColor(Color.decode("#0C1445"));
+                dayTime = false;
+                System.out.println("You have turned it on.");
+            }
+            else {
+                sceneArea.changeColor(Color.decode("#bdd7ff"));
+                dayTime = true;
+                System.out.println("You have turned it off.");
+            }
+            
         }
     }
 
@@ -149,4 +166,5 @@ public class SceneCanvas extends JComponent implements MouseListener{
 // https://youtu.be/jptf1Wd_omw?si=dln4I3_OGvlfPUgi
 // https://youtu.be/0cATENiMsBE?si=T33_OPIZlyOza4kQ
 // https://medium.com/javarevisited/filtering-a-java-collection-by-type-7c1d611d0d95
+// https://stackoverflow.com/questions/4634107/is-there-any-way-to-add-a-mouselistener-to-a-graphic-object
 

@@ -38,7 +38,7 @@ public class Cloud implements DrawingObject{
     public void move(double n){
         xCoor += n;
         if (xCoor > 650) {
-            xCoor = -100;
+            xCoor = -200;
         }
 
         el1 = new Circle(xCoor, yCoor, size, color);

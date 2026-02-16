@@ -11,6 +11,7 @@ public class Apple implements DrawingObject{
 
     public Apple(double x, double y, Color color) {
         curvedShape = new Path2D.Double();
+        curvedShape.moveTo(x, y);
     }
 
 
