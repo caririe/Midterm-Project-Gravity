@@ -1,3 +1,18 @@
+/**
+The Pentagon class is one of the two composite shapes created. It was created using a Path2D object, wherin the distance of the vertices of a Pentagon were manually computed to get the values that will be multipled to the desired size. It will be used to create the center pentagon for the SoccerBall object.
+@author Carrie Mae M. Lee (253240) and Reysheil Anne B. Doromal (252022)
+@version Febuary 21, 2026
+I have not discussed the Java language code in my program
+with anyone other than my instructor or the teaching assistants
+assigned to this course.
+I have not used Java language code obtained from another student,
+or any other unauthorized source, either modified or unmodified.
+If any Java language code or documentation used in my program
+was obtained from another source, such as a textbook or website,
+that has been clearly noted with a proper citation in the comments
+of my program.
+*/
+
 import java.awt.*;
 import java.awt.geom.*;
 

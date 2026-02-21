@@ -2,10 +2,10 @@ import java.awt.*;
 import java.awt.geom.*;
 
 public class Egg implements DrawingObject{
-    // This class is for good egg(di pa broken)
 
     private double xCoor;
     private double yCoor;
+    private double velocity;
 
     public Egg(double x, double y) {
         xCoor = x;
@@ -39,21 +39,24 @@ public class Egg implements DrawingObject{
         g2d.fill(highlight);
         g2d.rotate(Math.toRadians(-20), xCoor+15, yCoor+21);
 
-
-
-
-
-
-        // Path2D.Double egg = new Path2D.Double();
-        // egg.moveTo(xCoor, yCoor-25);
-        // egg.curveTo(xCoor+12, yCoor-25, xCoor+22, yCoor+5, xCoor, yCoor+25);
-        // egg.curveTo(xCoor-22, yCoor+5, xCoor-12, yCoor-25, xCoor, yCoor-25);
-        // egg.closePath();
-        // g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        // g2d.setColor(Color.decode("#f4aa7e"));
-        // g2d.fill(egg);
-
-
     }
 
+    public double getX() {
+        return xCoor;
     }
+
+    public double getY() {
+        return yCoor;
+    }
+
+    public void fall(double n) {
+        velocity += n;
+        yCoor += velocity;
+
+        if (yCoor >= 500) {
+            yCoor = 500;
+            velocity = 0;
+        }
+
+    }
+}

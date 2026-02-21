@@ -5,7 +5,6 @@ public class Rectangle implements DrawingObject {
 
     private double xCoor;
     private double yCoor;
-    private double size;
     private double width;
     private double height;
     private Color color;

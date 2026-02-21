@@ -36,7 +36,6 @@ public class House implements DrawingObject{
         roof.lineTo(x+size, y);
         roof.lineTo(x + size/2, y-size);
         roof.closePath();
-        separator = new Line(xCoor, yCoor, xCoor+size, yCoor, 1, Color.decode("#000000"));
 
     }
     @Override
@@ -48,6 +47,5 @@ public class House implements DrawingObject{
         g2d.fill(door);
         g2d.setColor(Color.RED);
         g2d.fill(roof);
-        separator.draw(g2d);
     }
 }

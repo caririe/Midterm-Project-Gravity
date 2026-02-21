@@ -23,6 +23,8 @@ public class SceneCanvas extends JComponent implements MouseListener{
     private Rectangle2D.Double dumbbellArea = new Rectangle2D.Double(736,275,50,50);
     private Rectangle2D.Double appleArea = new Rectangle2D.Double(666,264,50,60);
     private Rectangle2D.Double eggArea = new Rectangle2D.Double(736,192,50,50);
+    private Rectangle2D.Double leftButton = new Rectangle2D.Double(669,97,30,30);
+    private Rectangle2D.Double rightButton = new Rectangle2D.Double(756,97,30,30);
     private double gravity;
 
     public SceneCanvas(int w, int h) {
@@ -56,6 +58,13 @@ public class SceneCanvas extends JComponent implements MouseListener{
                     else if (o instanceof Apple ) {
                         ((Apple) o).fall(0.1*gravity);
                     }
+                    else if (o instanceof Egg ) {
+                        ((Egg) o).fall(0.1*gravity); 
+                        if (((Egg) o).getY() >= 500) {
+                            
+                        }
+                        
+                     }
                 }
                 repaint();
             }
@@ -80,11 +89,9 @@ public class SceneCanvas extends JComponent implements MouseListener{
         listDrawingObject.add(new Tree());
         listDrawingObject.add(new Apple(666, 275));
         listDrawingObject.add(new Egg(735, 179));
-        // listDrawingObject.add(new Moon());
-        listDrawingObject.add(new BrokenEgg(400, 300));
+        // listDrawingObject.add(new BrokenEgg(400, 300));
     }
 
-    // test
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -102,6 +109,11 @@ public class SceneCanvas extends JComponent implements MouseListener{
         Circle mountain1 = new Circle(150, 380, 800, Color.decode("#63AD43"));
         Circle mountain2 = new Circle(-200, 400, 800, Color.decode("#63AD43"));
         Rectangle road = new Rectangle(0, 525, 650, 65, Color.decode("#a3a3a3"));
+        Rectangle roadLine1 = new Rectangle(50, 550, 100, 10, Color.decode("#f8d84f"));
+        Rectangle roadLine2 = new Rectangle(203, 550, 100, 10, Color.decode("#f8d84f"));
+        Rectangle roadLine3 = new Rectangle(357, 550, 100, 10, Color.decode("#f8d84f"));
+        Rectangle roadLine4 = new Rectangle(516, 550, 100, 10, Color.decode("#f8d84f"));
+        
         
         sceneArea.draw(g2d);
         mountain1.draw(g2d);
@@ -113,6 +125,11 @@ public class SceneCanvas extends JComponent implements MouseListener{
                 i.draw(g2d);
             }
         }
+
+        for (DrawingObject i : listFallingObject) {
+            i.draw(g2d);
+        }
+        
         // MENU
         Rectangle2D.Double menuArea = new Rectangle2D.Double(650, 0, 150, 600); // check if resizable
         g2d.setColor(Color.decode("#ffffff"));
@@ -128,22 +145,23 @@ public class SceneCanvas extends JComponent implements MouseListener{
         rightButton.draw(g2d);
 
         
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.decode("#D72B3B"));
         g2d.fill(fallButton);
         
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.decode("#BDD7FF"));
         g2d.fill(windButton);
 
         Rectangle2D.Double leavesButton = new Rectangle2D.Double(665,491,122,37);
-        g2d.setColor(Color.GRAY);
+        g2d.setColor(Color.decode("#81C975"));
         g2d.fill(leavesButton);
 
         
-        g2d.setColor(Color.BLUE);
+        g2d.setColor(Color.decode("#6B8EAE"));
         g2d.fill(timeButton);
 
         g2d.setColor(Color.BLACK);
         g2d.drawString("-", 676, 104);
+        g2d.drawString(Double.toString(gravity), 701, 96);
         g2d.drawString("+", 765, 104);
         g2d.drawString("FALL", 706, 356);
         g2d.drawString("WIND", 706, 442);
@@ -155,11 +173,6 @@ public class SceneCanvas extends JComponent implements MouseListener{
                 i.draw(g2d);
             }
         }
-
-        for (DrawingObject i : listFallingObject) {
-            i.draw(g2d);
-        }
-        
     }
 
     @Override
@@ -180,9 +193,17 @@ public class SceneCanvas extends JComponent implements MouseListener{
         else if (timeButton.contains(me.getX(), me.getY())) {
             if (dayTime) {
                 sceneArea.changeColor(Color.decode("#0C1445"));
+                Object removeSun = null;
+                for (DrawingObject i : listDrawingObject) {
+                    if (i instanceof Sun) {
+                        removeSun = i;
+                    }
+                }
+                listDrawingObject.remove(removeSun);
+                listDrawingObject.add(new Moon());
                 for (DrawingObject i : listDrawingObject) {
                     if (i instanceof Cloud) {
-                        ((Cloud) i).changeColor(Color.decode("#5C54A4"));
+                        ((Cloud) i).changeColor(new Color (92, 84, 164, 180));
                     }
                 }
                 dayTime = false;
@@ -190,9 +211,17 @@ public class SceneCanvas extends JComponent implements MouseListener{
             }
             else {
                 sceneArea.changeColor(Color.decode("#bdd7ff"));
+                Object removeMoon = null;
+                for (DrawingObject i : listDrawingObject) {
+                    if (i instanceof Moon) {
+                        removeMoon = i;
+                    }
+                }
+                listDrawingObject.remove(removeMoon);
+                listDrawingObject.add(new Sun(516, 60, 100, Color.decode("#F8D84F"),Color.decode("#F9BE38")));
                 for (DrawingObject i : listDrawingObject) {
                     if (i instanceof Cloud) {
-                        ((Cloud) i).changeColor(Color.decode("#FFFFFF"));
+                        ((Cloud) i).changeColor(new Color (255, 255, 255, 180));
                     }
                 }
                 dayTime = true;
@@ -213,7 +242,7 @@ public class SceneCanvas extends JComponent implements MouseListener{
         }
 
         else if (eggArea.contains(me.getX(), me.getY())) {
-            listFallingObject.add(new Dumbbell(200, -50, 50, Color.GRAY));
+            listFallingObject.add(new Egg(200, -50));
             System.out.println("Added an egg.");
             repaint();
         }
@@ -225,6 +254,16 @@ public class SceneCanvas extends JComponent implements MouseListener{
         }
         else if (fallButton.contains(me.getX(), me.getY())) {
             fallingTimer.start();
+            repaint();
+        }
+        else if (leftButton.contains(me.getX(), me.getY())) {
+            if (gravity > 2 && gravity < 12) { gravity -= 0.1;}
+            
+            repaint();
+        }
+
+        else if (rightButton.contains(me.getX(), me.getY())) {
+            if (gravity > 2 && gravity < 12) { gravity += 0.1;}
             repaint();
         }
     }
