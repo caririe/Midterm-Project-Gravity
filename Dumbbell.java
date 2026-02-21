@@ -35,6 +35,11 @@ public class Dumbbell implements DrawingObject{
     public void fall(double n){
         velocity += n;
         yCoor += velocity;
+
+        if (yCoor >= 475) { 
+            yCoor = 475;
+            velocity = 0;
+        }
         body = new Circle(xCoor, yCoor, size, color);
         handle = new Path2D.Double();
         handle.moveTo(xCoor + size*0.2, yCoor + size*0.2);

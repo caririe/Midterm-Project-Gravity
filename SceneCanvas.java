@@ -21,6 +21,8 @@ public class SceneCanvas extends JComponent implements MouseListener{
     private Rectangle2D.Double fallButton = new Rectangle2D.Double(665,343,122,37);
     private Rectangle2D.Double soccerBallArea = new Rectangle2D.Double(666,190,50,50);
     private Rectangle2D.Double dumbbellArea = new Rectangle2D.Double(736,275,50,50);
+    private Rectangle2D.Double appleArea = new Rectangle2D.Double(666,264,50,60);
+    private Rectangle2D.Double eggArea = new Rectangle2D.Double(736,192,50,50);
     private double gravity;
 
     public SceneCanvas(int w, int h) {
@@ -51,6 +53,9 @@ public class SceneCanvas extends JComponent implements MouseListener{
                     else if (o instanceof SoccerBall) {
                         ((SoccerBall) o).fall(0.1*gravity);
                     }
+                    else if (o instanceof Apple ) {
+                        ((Apple) o).fall(0.1*gravity);
+                    }
                 }
                 repaint();
             }
@@ -58,13 +63,25 @@ public class SceneCanvas extends JComponent implements MouseListener{
         sceneArea = new Rectangle(0, 0, 650, 600, Color.decode("#bdd7ff")); 
 
         // add to the objects to the list of drawing objects 
-        listDrawingObject.add(new Cloud(50, 108, 58, Color.decode("#FFFFFF")));
-        listDrawingObject.add(new Cloud(250, 120, 58, Color.decode("#FFFFFF")));
-        listDrawingObject.add(new Cloud(450, 97, 58, Color.decode("#FFFFFF")));
+        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
+        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
+        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
+        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
+        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
+        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
+        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
+        
+
+
         listDrawingObject.add(new Sun(516, 60, 100, Color.decode("#F8D84F"),Color.decode("#F9BE38")));
         listDrawingObject.add(new House(455, 445, 80, Color.decode("#F5F5DC"), Color.decode("#DED1B6")));
         listDrawingObject.add(new Dumbbell(736, 275, 50, Color.decode("#7D7F7C")));
         listDrawingObject.add(new SoccerBall(691, 215));
+        listDrawingObject.add(new Tree());
+        listDrawingObject.add(new Apple(666, 275));
+        listDrawingObject.add(new Egg(735, 179));
+        // listDrawingObject.add(new Moon());
+        listDrawingObject.add(new BrokenEgg(400, 300));
     }
 
     // test
@@ -125,6 +142,14 @@ public class SceneCanvas extends JComponent implements MouseListener{
         g2d.setColor(Color.BLUE);
         g2d.fill(timeButton);
 
+        g2d.setColor(Color.BLACK);
+        g2d.drawString("-", 676, 104);
+        g2d.drawString("+", 765, 104);
+        g2d.drawString("FALL", 706, 356);
+        g2d.drawString("WIND", 706, 442);
+        g2d.drawString("LEAVES", 706, 502);
+        g2d.drawString("TIME", 706, 557);
+
         for (DrawingObject i : listDrawingObject) {
             if (!(i instanceof Cloud)) {
                 i.draw(g2d);
@@ -176,7 +201,7 @@ public class SceneCanvas extends JComponent implements MouseListener{
             repaint();
         }
         else if (soccerBallArea.contains(me.getX(), me.getY())) {
-            listFallingObject.add(new SoccerBall(250, -50));
+            listFallingObject.add(new SoccerBall(Math.random()*600, -50));
             System.out.println("Added a soccerball.");
             repaint();
         }
@@ -184,6 +209,18 @@ public class SceneCanvas extends JComponent implements MouseListener{
         else if (dumbbellArea.contains(me.getX(), me.getY())) {
             listFallingObject.add(new Dumbbell(200, -50, 50, Color.GRAY));
             System.out.println("Added a dumbbell.");
+            repaint();
+        }
+
+        else if (eggArea.contains(me.getX(), me.getY())) {
+            listFallingObject.add(new Dumbbell(200, -50, 50, Color.GRAY));
+            System.out.println("Added an egg.");
+            repaint();
+        }
+
+        else if (appleArea.contains(me.getX(), me.getY())) {
+            listFallingObject.add(new Apple(300, -50));
+            System.out.println("Added an apple.");
             repaint();
         }
         else if (fallButton.contains(me.getX(), me.getY())) {
@@ -221,4 +258,7 @@ public class SceneCanvas extends JComponent implements MouseListener{
 // https://youtu.be/0cATENiMsBE?si=T33_OPIZlyOza4kQ
 // https://medium.com/javarevisited/filtering-a-java-collection-by-type-7c1d611d0d95
 // https://stackoverflow.com/questions/4634107/is-there-any-way-to-add-a-mouselistener-to-a-graphic-object
+// https://stackoverflow.com/questions/4286982/how-do-you-generate-a-random-number-within-a-given-limit-using-the-actionscript
+// https://docs.oracle.com/javase/8/docs/api/java/awt/Graphics2D.html
+// https://stackoverflow.com/questions/58240025/how-to-draw-any-text-using-drawstring-in-java
 

@@ -59,6 +59,18 @@ public class SoccerBall implements DrawingObject{
     public void fall(double n) {
         velocity += n;
         yCoor += velocity;
+        xCoor += 2;
+
+        if (yCoor >= 500) {
+            yCoor = 500; // https://stackoverflow.com/questions/609002/bouncing-ball-in-java
+            velocity *= -0.88;
+            
+            if (Math.abs(velocity) < 0.5) {
+                velocity = 0;
+                yCoor = 500; // https://stackoverflow.com/questions/609002/bouncing-ball-in-java
+            }
+        }
+
         circle = new Circle(xCoor - 25, yCoor - 25, 50, Color.WHITE);
         pentagon = new Pentagon(xCoor, yCoor, 2.3, Color.BLACK); // adjust/check size
         line1 = new Line(xCoor, yCoor, xCoor, yCoor-20, 1, Color.BLACK);
