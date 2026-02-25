@@ -46,5 +46,13 @@ public class Tree implements  DrawingObject{
 
     }
 
+    public double getX() {
+        return 60;
+    }
+
+    public double getY() {
+        return 300;
+    }
+
 
 }

@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "SceneStarter",
+            "request": "launch",
+            "mainClass": "SceneStarter",
+            "projectName": "Midterm-Project-Gravity_5df51f6f"
+        },
+        {
             "type": "jdk",
             "request": "launch",
             "name": "Launch Java App"

@@ -75,4 +75,13 @@ public class BrokenEgg implements DrawingObject{
         line5.draw(g2d);
     }
 
+    public double getX() {
+        return xCoor;
     }
+
+    public double getY() {
+        return yCoor;
+    }
+
+    
+}

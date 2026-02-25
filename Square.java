@@ -25,5 +25,13 @@ public class Square implements DrawingObject {
         g2d.setTransform(reset);
 
     }
+
+    public double getX() {
+        return xCoor;
+    }
+
+    public double getY() {
+        return yCoor;
+    }
     
 }

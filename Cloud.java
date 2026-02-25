@@ -1,7 +1,4 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.ArrayList;
 
 public class Cloud implements DrawingObject{
 
@@ -29,10 +26,6 @@ public class Cloud implements DrawingObject{
         el5 = new Circle(xCoor+size*2.08, yCoor+size*0.06, size*1.29, color);
         el6 = new Circle(xCoor+size*1.29, yCoor+size*0.31, size*1.29, color);
         el7 = new Circle(xCoor+size*0.77, yCoor+size*0.27, size*1.29, color);
-    }
-
-    public double getX() {
-        return xCoor;
     }
 
     public void move(double n){
@@ -70,5 +63,13 @@ public class Cloud implements DrawingObject{
         el5 = new Circle(xCoor+size*2.08, yCoor+size*0.06, size*1.29, color);
         el6 = new Circle(xCoor+size*1.29, yCoor+size*0.31, size*1.29, color);
         el7 = new Circle(xCoor+size*0.77, yCoor+size*0.27, size*1.29, color);
+    }
+
+    public double getX() {
+        return xCoor;
+    }
+
+    public double getY() {
+        return yCoor;
     }
 }

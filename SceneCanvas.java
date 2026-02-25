@@ -1,8 +1,8 @@
 import java.awt.*;
-import java.util.*;
-import javax.swing.*;
+import java.awt.event.*;
 import java.awt.geom.*;
-import java.awt.event.*;;
+import java.util.*;
+import javax.swing.*;;
 
 public class SceneCanvas extends JComponent implements MouseListener{
 
@@ -26,6 +26,8 @@ public class SceneCanvas extends JComponent implements MouseListener{
     private Rectangle2D.Double leftButton = new Rectangle2D.Double(669,97,30,30);
     private Rectangle2D.Double rightButton = new Rectangle2D.Double(756,97,30,30);
     private double gravity;
+    private Font buttonFont;
+    private Font labelFont;
 
     public SceneCanvas(int w, int h) {
         width = w;
@@ -33,6 +35,7 @@ public class SceneCanvas extends JComponent implements MouseListener{
         setPreferredSize(new Dimension(w, h));
         listDrawingObject = new ArrayList<>();
         listFallingObject = new ArrayList<>();
+        sceneArea = new Rectangle(0, 0, 650, 600, Color.decode("#bdd7ff")); 
         this.addMouseListener(this);
         gravity = 9.8;
         cloudTimer = new javax.swing.Timer(10, new ActionListener() {
@@ -48,7 +51,9 @@ public class SceneCanvas extends JComponent implements MouseListener{
 
         fallingTimer = new javax.swing.Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                for (DrawingObject o : listFallingObject) {
+                boolean allFallen = true;
+                for (int i = listFallingObject.size() - 1; i >=0; i--) {
+                    DrawingObject o = listFallingObject.get(i);
                     if (o instanceof Dumbbell) {
                         ((Dumbbell) o).fall(0.1*gravity);
                     }
@@ -61,27 +66,26 @@ public class SceneCanvas extends JComponent implements MouseListener{
                     else if (o instanceof Egg ) {
                         ((Egg) o).fall(0.1*gravity); 
                         if (((Egg) o).getY() >= 500) {
-                            
+                            listFallingObject.set(i, new BrokenEgg(o.getX(), o.getY()));
                         }
-                        
-                     }
+                    }
+                    if (o.getY() < 500) {
+                        allFallen = false;
+                    }
+                }
+                if (allFallen) {
+                    fallingTimer.stop();
                 }
                 repaint();
             }
+                
         });
-        sceneArea = new Rectangle(0, 0, 650, 600, Color.decode("#bdd7ff")); 
-
-        // add to the objects to the list of drawing objects 
-        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
-        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
-        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
-        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
-        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
-        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
-        listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
         
 
-
+        // add to the objects to the list of drawing objects 
+        for (int i = 0; i < 7; i++) {
+            listDrawingObject.add(new Cloud(Math.random()*650, Math.random()*340 + 20, 58, new Color (255, 255, 255, 180)));
+        }
         listDrawingObject.add(new Sun(516, 60, 100, Color.decode("#F8D84F"),Color.decode("#F9BE38")));
         listDrawingObject.add(new House(455, 445, 80, Color.decode("#F5F5DC"), Color.decode("#DED1B6")));
         listDrawingObject.add(new Dumbbell(736, 275, 50, Color.decode("#7D7F7C")));
@@ -102,23 +106,28 @@ public class SceneCanvas extends JComponent implements MouseListener{
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON
         );
-
         g2d.setRenderingHints(rh);
+
 
         //SCENE AREA
         Circle mountain1 = new Circle(150, 380, 800, Color.decode("#63AD43"));
         Circle mountain2 = new Circle(-200, 400, 800, Color.decode("#63AD43"));
-        Rectangle road = new Rectangle(0, 525, 650, 65, Color.decode("#a3a3a3"));
-        Rectangle roadLine1 = new Rectangle(50, 550, 100, 10, Color.decode("#f8d84f"));
-        Rectangle roadLine2 = new Rectangle(203, 550, 100, 10, Color.decode("#f8d84f"));
-        Rectangle roadLine3 = new Rectangle(357, 550, 100, 10, Color.decode("#f8d84f"));
-        Rectangle roadLine4 = new Rectangle(516, 550, 100, 10, Color.decode("#f8d84f"));
+        Rectangle road = new Rectangle(0, 525, 650, 75, Color.decode("#a3a3a3"));
+        Rectangle roadLine1 = new Rectangle(50, 560, 100, 10, Color.decode("#f8d84f"));
+        Rectangle roadLine2 = new Rectangle(203, 560, 100, 10, Color.decode("#f8d84f"));
+        Rectangle roadLine3 = new Rectangle(357, 560, 100, 10, Color.decode("#f8d84f"));
+        Rectangle roadLine4 = new Rectangle(516, 560, 100, 10, Color.decode("#f8d84f"));
         
         
         sceneArea.draw(g2d);
         mountain1.draw(g2d);
         mountain2.draw(g2d);
         road.draw(g2d);
+        roadLine1.draw(g2d);
+        roadLine2.draw(g2d);
+        roadLine3.draw(g2d);
+        roadLine4.draw(g2d);
+
 
         for (DrawingObject i : listDrawingObject) {
             if (i instanceof Cloud) {
@@ -129,14 +138,16 @@ public class SceneCanvas extends JComponent implements MouseListener{
         for (DrawingObject i : listFallingObject) {
             i.draw(g2d);
         }
+
+
         
         // MENU
-        Rectangle2D.Double menuArea = new Rectangle2D.Double(650, 0, 150, 600); // check if resizable
+        Rectangle2D.Double menuArea = new Rectangle2D.Double(650, 0, 150, 600); 
         g2d.setColor(Color.decode("#ffffff"));
         g2d.fill(menuArea);
 
-        Rectangle2D.Double menuBarHeading = new Rectangle2D.Double(650, 0, 150, 50); // check if resizable
-        g2d.setColor(Color.decode("#a9a9a9"));
+        Rectangle2D.Double menuBarHeading = new Rectangle2D.Double(650, 0, 150, 50); 
+        g2d.setColor(Color.decode("#e1bb15"));
         g2d.fill(menuBarHeading);
 
         Square leftButton = new Square(669, 97, 30, Color.GRAY);
@@ -145,28 +156,42 @@ public class SceneCanvas extends JComponent implements MouseListener{
         rightButton.draw(g2d);
 
         
-        g2d.setColor(Color.decode("#D72B3B"));
+        g2d.setColor(Color.decode("#9d1800"));
         g2d.fill(fallButton);
         
-        g2d.setColor(Color.decode("#BDD7FF"));
+        g2d.setColor(Color.decode("#08234b"));
         g2d.fill(windButton);
 
         Rectangle2D.Double leavesButton = new Rectangle2D.Double(665,491,122,37);
-        g2d.setColor(Color.decode("#81C975"));
+        g2d.setColor(Color.decode("#045211"));
         g2d.fill(leavesButton);
 
         
-        g2d.setColor(Color.decode("#6B8EAE"));
+        g2d.setColor(Color.decode("#420754"));
         g2d.fill(timeButton);
 
+
+        g2d.setColor(Color.WHITE);
+        buttonFont = new Font("Arial", Font.BOLD, 20);
+        g2d.setFont(buttonFont);
+        g2d.drawString("-", 680, 118);
+        g2d.drawString("+", 765, 119);
+        g2d.drawString("FALL", 703, 368);
+        g2d.drawString("WIND", 700, 460);
+        g2d.drawString("LEAVES", 690, 517);
+        g2d.drawString("TIME", 703, 574);
+        g2d.drawString("MENU", 695, 35);
         g2d.setColor(Color.BLACK);
-        g2d.drawString("-", 676, 104);
-        g2d.drawString(Double.toString(gravity), 701, 96);
-        g2d.drawString("+", 765, 104);
-        g2d.drawString("FALL", 706, 356);
-        g2d.drawString("WIND", 706, 442);
-        g2d.drawString("LEAVES", 706, 502);
-        g2d.drawString("TIME", 706, 557);
+        g2d.drawString(String.format("%.1f", gravity), 712, 119);
+
+        g2d.setColor(Color.BLACK);
+        labelFont = new Font("Arial", Font.PLAIN, 18);
+        g2d.setFont(labelFont);
+        g2d.drawString("Gravity Level", 675, 78);
+        g2d.drawString("Object Selection", 660, 160);
+        g2d.drawString("Scene Setting", 667, 415);
+        
+        
 
         for (DrawingObject i : listDrawingObject) {
             if (!(i instanceof Cloud)) {
@@ -286,6 +311,12 @@ public class SceneCanvas extends JComponent implements MouseListener{
     @Override
     public void mouseExited(MouseEvent me) {
 
+    }
+
+    public void resetFalling() {
+        fallingTimer.stop();
+        listFallingObject.clear();
+        repaint();
     }
     
 }

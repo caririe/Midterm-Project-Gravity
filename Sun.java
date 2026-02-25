@@ -73,4 +73,12 @@ public class Sun implements DrawingObject {
 
     }
 
+    public double getX() {
+        return xCoor;
+    }
+
+    public double getY() {
+        return yCoor;
+    }
+
 }

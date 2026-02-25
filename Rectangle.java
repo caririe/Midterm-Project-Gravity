@@ -31,5 +31,13 @@ public class Rectangle implements DrawingObject {
     public void changeColor (Color c) {
         color = c;
     }
+
+    public double getX() {
+        return xCoor;
+    }
+
+    public double getY() {
+        return yCoor;
+    }
     
 }

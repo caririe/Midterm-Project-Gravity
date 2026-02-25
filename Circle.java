@@ -46,6 +46,14 @@ public class Circle implements DrawingObject{
         color = c;
     }
 
+    public double getX() {
+        return xCoor;
+    }
+
+    public double getY() {
+        return yCoor;
+    }
+
 
     
 

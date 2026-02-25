@@ -15,4 +15,12 @@ public class Moon implements DrawingObject{
         outer.draw(g2d);
         // inner.draw(g2d);
     }
+
+    public double getX() {
+        return 487;
+    }
+
+    public double getY() {
+        return 42;
+    }
 }

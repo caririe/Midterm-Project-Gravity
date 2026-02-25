@@ -48,4 +48,12 @@ public class House implements DrawingObject{
         g2d.setColor(Color.RED);
         g2d.fill(roof);
     }
+
+    public double getX() {
+        return xCoor;
+    }
+
+    public double getY() {
+        return yCoor;
+    }
 }

@@ -32,5 +32,13 @@ public class Line implements DrawingObject{
         // not sure if we with rendering hits here
 
     }
+
+    public double getX() {
+        return xStartCoor;
+    }
+
+    public double getY() {
+        return yStartCoor;
+    }
     
 }

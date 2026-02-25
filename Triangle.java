@@ -36,5 +36,13 @@ public class Triangle implements DrawingObject{
         g2d.setTransform(reset);
 
     }
+
+    public double getX() {
+        return x1;
+    }
+
+    public double getY() {
+        return y1;
+    }
     
 }

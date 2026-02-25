@@ -23,10 +23,6 @@ public class SoccerBall implements DrawingObject{
     private Pentagon pentagon;
     private Circle circle;
     private Line line1;
-    private Line line2;
-    private Line line3;
-    private Line line4;
-    private Line line5;
     private Triangle triangle1;
     public double velocity = 0;
 
@@ -37,10 +33,6 @@ public class SoccerBall implements DrawingObject{
         circle = new Circle(xCoor - 25, yCoor - 25, 50, Color.WHITE);
         pentagon = new Pentagon(xCoor, yCoor, 2.3, Color.BLACK);
         line1 = new Line(xCoor, yCoor, xCoor, yCoor-20, 1, Color.BLACK);
-        // line2 = new Line(xCoor, yCoor, xCoor+17, yCoor-5, 1, Color.BLACK);
-        // line3 = new Line(xCoor, yCoor, xCoor+10, yCoor+15, 1, Color.BLACK);
-        // line4 = new Line(xCoor, yCoor, xCoor-10, yCoor+15, 1, Color.BLACK);
-        // line5 = new Line(xCoor, yCoor, xCoor-17, yCoor-5, 1, Color.BLACK);
         triangle1 = new Triangle(xCoor, yCoor-15, x-7, y-23, x+7, y-23, Color.BLACK);
     }
 
@@ -86,11 +78,15 @@ public class SoccerBall implements DrawingObject{
         circle = new Circle(xCoor - 25, yCoor - 25, 50, Color.WHITE);
         pentagon = new Pentagon(xCoor, yCoor, 2.3, Color.BLACK);
         line1 = new Line(xCoor, yCoor, xCoor, yCoor-20, 1, Color.BLACK);
-        // line2 = new Line(xCoor, yCoor, xCoor+17, yCoor-5, 1, Color.BLACK);
-        // line3 = new Line(xCoor, yCoor, xCoor+10, yCoor+15, 1, Color.BLACK);
-        // line4 = new Line(xCoor, yCoor, xCoor-10, yCoor+15, 1, Color.BLACK);
-        // line5 = new Line(xCoor, yCoor, xCoor-17, yCoor-5, 1, Color.BLACK);
         triangle1 = new Triangle(xCoor, yCoor-15, xCoor-7, yCoor-23, xCoor+7, yCoor-23, Color.BLACK);
+    }
+
+    public double getX() {
+        return xCoor;
+    }
+
+    public double getY() {
+        return yCoor;
     }
 
 
